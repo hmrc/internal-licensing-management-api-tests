@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.api.specs
+package uk.gov.hmrc.api.helpers
 
-import org.scalatest.featurespec.AnyFeatureSpec
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.GivenWhenThen
-import uk.gov.hmrc.api.helpers.AuthHelper
+import javax.inject.Inject
+import org.scalatest.Assertions.fail
 import uk.gov.hmrc.api.services.AuthService
-import uk.gov.hmrc.apitestrunner.http.HttpClient
 
-trait BaseSpec extends AnyFeatureSpec with GivenWhenThen with Matchers with HttpClient {
-  val authHelper = new AuthHelper(new AuthService)
+class AuthHelper @Inject() (authService: AuthService) {
+
+  def getStandardAppToken: String = {
+    val token = authService.getStandardAppBearerToken
+    token.header("Authorization").getOrElse(fail("Could not obtain bearer token"))
+  }
+  def getPrivAppToken: String     = {
+    val token = authService.getPrivAppBearerToken
+    token.header("Authorization").getOrElse(fail("Could not obtain bearer token"))
+  }
 }
