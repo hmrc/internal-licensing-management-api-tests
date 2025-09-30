@@ -17,7 +17,7 @@ docker run --rm -d -p 27017:27017 --name mongo percona/percona-server-mongodb:6.
 Start `INTERNAL_LICENSING_MANAGEMENT_API` services as follows:
 
 ```bash
-sm2 --start INTERNAL_LICENSING_MANAGEMENT_API INTERNAL_LICENSING_MANAGEMENT_API_STUBS
+sm2 --start ILMS_ALL
 ```
 
 ## Tests
